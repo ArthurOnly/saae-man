@@ -7,20 +7,20 @@
             @csrf
             <div class="flex flex-col gap-4">
                 <label>Ordem de serviço:</label>
-                <input type="text" name="ordem">
+                <input class="text-black" type="text" name="order">
             </div>
             <div class="flex flex-col gap-4">
                 <label>Inscrição:</label>
-                <input type="text" name="inscricao">
+                <input class="text-black" type="text" name="subscription">
             </div>
             <div class="flex flex-col gap-8 lg:flex-row">
                 <div class="flex flex-col gap-4 flex-grow-3 w-full">
                     <label>Rua:</label>
-                    <input type="text" name="rua">
+                    <input class="text-black" type="text" name="street">
                 </div>
                 <div class="flex flex-col gap-4 flex-grow-1 w-full">
                     <label>Número:</label>
-                    <input type="text" name="numero">
+                    <input class="text-black" type="text" name="number">
                 </div>
             </div>
             <button type="submit" class="bg-blue-800 p-4">Cadastrar</button>

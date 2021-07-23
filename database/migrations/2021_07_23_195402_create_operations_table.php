@@ -15,6 +15,12 @@ class CreateOperationsTable extends Migration
     {
         Schema::create('operations', function (Blueprint $table) {
             $table->id();
+            $table->string("order");
+            $table->double("lat");
+            $table->double("long");
+            $table->string("address");
+            $table->string("subscription");
+            $table->boolean("completed");
             $table->timestamps();
         });
     }
