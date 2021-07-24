@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Operation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 
@@ -16,6 +17,7 @@ class DashboardController extends Controller
     public function __invoke(Request $request)
     {
         $mapsKey = config('app.maps_api_key');
-        return view("dashboard", ["maps_key" => $mapsKey]);
+        $allOperations = Operation::all()->toArray();
+        return view("dashboard", ["maps_key" => $mapsKey, "all_operations" => $allOperations]);
     }
 }
