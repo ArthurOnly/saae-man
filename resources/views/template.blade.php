@@ -10,6 +10,7 @@
 </head>
 
 <body class="bg-gray-800 text-white">
+    <x-site.nav/>
     @yield('body')
     @yield('js')
 </body>

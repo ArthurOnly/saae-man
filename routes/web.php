@@ -15,10 +15,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', DashboardController::class);
-Route::get('/operation/register', [OperationController::class, "index"])->name("operation.register");
-Route::get('/operation/register/{OPN?}', [OperationController::class, "index"])->name("operation.register");
-Route::get('/operation/finish/{OPN}', [OperationController::class, "finish"])->name("operation.finish");
-Route::post('/operation/finish/{OPN}', [OperationController::class, "finishHandler"]);
-Route::post('/operation/register', [OperationController::class, "create"])->name("operation.create");
-Route::post('/operation/register/{OPN}', [OperationController::class, "update"])->name("operation.edit");
+Route::middleware('auth')->group(function () {
+    Route::get('/', DashboardController::class)->name("dashboard");
+    Route::get('/operation/register/{OPN?}', [OperationController::class, "index"])->name("operation.register")->middleware('isAdm');
+    Route::get('/operation/finish/{OPN}', [OperationController::class, "finish"])->name("operation.finish");
+    Route::post('/operation/finish/{OPN}', [OperationController::class, "finishHandler"]);
+    Route::post('/operation/register', [OperationController::class, "create"])->name("operation.create")->middleware('isAdm');
+    Route::post('/operation/register/{OPN}', [OperationController::class, "update"])->name("operation.edit")->middleware('isAdm');
+});
+
+
+require __DIR__.'/auth.php';

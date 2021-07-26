@@ -8,8 +8,8 @@ use Illuminate\Support\Facades\Http;
 
 class OperationController extends Controller
 {
-    public function index($operationNumber){
-        $operation = null;
+    public function index($operationNumber = null){
+        $operation = [];
         $address = null;
         if ($operationNumber){
             $operation = Operation::firstWhere('order', $operationNumber);

@@ -6,7 +6,9 @@
     <div class="container mx-auto py-24">
         <div class="flex w-full">
             <h1 class="text-4xl font-bold">Procedimentos</h1>
-            <a href="{{route('operation.register')}}" class="ml-auto px-6 py-3 font-semibold rounded-full bg-green-100 text-green-800">+ Inserir novo</a>
+            @if ($userType == 1)
+                <a href="{{route('operation.register')}}" class="ml-auto px-6 py-3 font-semibold rounded-full bg-green-100 text-green-800">+ Inserir novo</a>
+            @endif
         </div>
         <table class="mt-8 min-w-full divide-y divide-gray-200">
             <thead class="bg-gray-700">
@@ -39,9 +41,11 @@
                         </span>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
-                            <a href={{route("operation.register", $operation['order'])}}>Editar</a>
                             <a href={{route("operation.finish", $operation['order'])}}>Finalizar</a>
-                            <a href={{route("operation.finish", $operation['order'])}}>Arquivar</a>
+                            @if ($userType == 1)
+                                <a href={{route("operation.register", $operation['order'])}}>Editar</a>
+                                <a href={{route("operation.finish", $operation['order'])}}>Arquivar</a>
+                            @endif
                         </td>
                     </tr>
                 @endforeach
