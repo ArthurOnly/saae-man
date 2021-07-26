@@ -8,8 +8,16 @@ use Illuminate\Support\Facades\Http;
 
 class OperationController extends Controller
 {
-    public function index(){
-        return view("registerOperation");
+    public function index($operationNumber){
+        $operation = null;
+        $address = null;
+        if ($operationNumber){
+            $operation = Operation::firstWhere('order', $operationNumber);
+            $inputAddress = explode("-", $operation->address)[0];
+            $address = explode(",", $inputAddress);
+        }
+
+        return view("registerOperation", ["operation" => $operation, 'address' => $address]);
     }
 
     public function create(Request $request){
@@ -43,6 +51,23 @@ class OperationController extends Controller
         Operation::create($data);
         
         return redirect('/')->with('message', ["type" => "success", "text" => "Criado com sucesso"]);;
+    }
+
+    public function update(Request $request){
+        $operation = Operation::firstWhere('order', $request->order);
+
+        $data = [
+            "order" => $request->order,
+            "subscription" => $request->subscription,
+            "lat" => $request->lat,
+            "long" => $request->long,
+            "order" => $request->order,
+            "address" => $request->street.",".$request->number." - CEARA MIRIM/RN",
+        ];
+
+        $operation->fill($data);
+        $operation->save();
+        return redirect('/')->with('message', ["type" => "success", "text" => "Alterado com sucesso"]);;
     }
 
     public function finish($order){

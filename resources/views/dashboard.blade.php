@@ -39,7 +39,9 @@
                         </span>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
+                            <a href={{route("operation.register", $operation['order'])}}>Editar</a>
                             <a href={{route("operation.finish", $operation['order'])}}>Finalizar</a>
+                            <a href={{route("operation.finish", $operation['order'])}}>Arquivar</a>
                         </td>
                     </tr>
                 @endforeach
