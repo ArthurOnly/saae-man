@@ -89,8 +89,10 @@ class OperationController extends Controller
 
     public function archive($order){
         $operation = Operation::firstWhere('order', $order);
-        $operation->archived = 1;
-        $operation->save();
+        if ($operation->completed == 1){
+            $operation->archived = 1;
+            $operation->save();
+        }
 
         return redirect('/')->with('message', ["type" => "success", "text" => "Arquivado com sucesso"]);
     }

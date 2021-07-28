@@ -13,7 +13,7 @@
         <table class="mt-8 min-w-full divide-y divide-gray-200">
             <thead class="bg-gray-700">
                 <tr>
-                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-100 uppercase tracking-wider">Código</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-100 uppercase tracking-wider hidden md:flex">Código</th>
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-100 uppercase tracking-wider">O. de serviço</th>
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-100 uppercase tracking-wider">Endereço</th>
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-100 uppercase tracking-wider">Status</th>
@@ -26,13 +26,13 @@
             <tbody class="bg-gray-600 divide-y divide-gray-600 w-full">
                 @foreach ($all_operations as $operation)
                     <tr>
-                        <td scope="col" class="px-6 py-4 whitespace-nowrap">
+                        <td scope="col" class="px-6 py-4 whitespace-nowrap hidden md:flex">
                             {{$operation['subscription']}}
                         </td>
                         <td scope="col" class="px-6 py-4 whitespace-nowrap">
                             {{$operation['order']}}
                         </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
+                        <td class="px-6 py-4">
                             {{$operation['address']}}
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
@@ -40,11 +40,11 @@
                             {{$operation['completed'] ? 'Finalizado' : 'A Realizar'}}
                         </span>
                         </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
+                        <td class="px-6 py-4">
                             <a href={{route("operation.finish", $operation['order'])}}>Finalizar</a>
                             @if ($userType == 1)
-                                <a class="mr-8" href={{route("operation.register", $operation['order'])}}>Editar</a>
-                                <a class="mr-8" href={{route("operation.archive", $operation['order'])}}>Arquivar</a>
+                                <a class="ml-4" href={{route("operation.register", $operation['order'])}}>Editar</a>
+                                <a class="ml-4" href={{route("operation.archive", $operation['order'])}}>Arquivar</a>
                             @endif
                         </td>
                     </tr>
