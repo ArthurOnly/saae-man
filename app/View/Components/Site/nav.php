@@ -3,6 +3,7 @@
 namespace App\View\Components\Site;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 use Illuminate\View\Component;
 
 class nav extends Component
@@ -25,7 +26,8 @@ class nav extends Component
     public function render()
     {
         $user = Auth::user();
+        $route = Route::currentRouteName();
         $userType = $user->type;
-        return view('components.site.nav', ["userType" => $userType]);
+        return view('components.site.nav', ["userType" => $userType, "route" => $route]);
     }
 }

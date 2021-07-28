@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\operation;
+use App\Models\Service;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 
 class OperationController extends Controller
@@ -18,6 +21,16 @@ class OperationController extends Controller
         }
 
         return view("registerOperation", ["operation" => $operation, 'address' => $address]);
+    }
+
+    public function archived(){
+        $allOperations = DB::table('operations')
+            ->join('services', 'operations.id', '=', 'services.operation_id')
+            ->join('users', 'users.id', '=', 'services.user_id')
+            ->select('operations.*', 'users.email')
+            ->get()->toArray();
+        $userType = Auth::user()->type;
+        return view("archivedOpearations", ["all_operations" => $allOperations, "userType" => $userType]);
     }
 
     public function create(Request $request){
@@ -74,10 +87,25 @@ class OperationController extends Controller
         return view("finishOperation", ["order" => $order]);
     }
 
+    public function archive($order){
+        $operation = Operation::firstWhere('order', $order);
+        $operation->archived = 1;
+        $operation->save();
+
+        return redirect('/')->with('message', ["type" => "success", "text" => "Arquivado com sucesso"]);
+    }
+
     public function finishHandler($order){
         $operation = Operation::firstWhere('order', $order);
         $operation->completed = 1;
         $operation->save();
+
+        $data = [
+            "user_id" => Auth::user()->id,
+            "operation_id" => $operation->id
+        ];
+
+        Service::create($data);
 
         return redirect('/')->with('message', ["type" => "success", "text" => "Finalizado com sucesso"]);;
     }

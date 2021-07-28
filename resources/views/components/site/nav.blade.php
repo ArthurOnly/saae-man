@@ -35,13 +35,15 @@
         <div class="hidden sm:block sm:ml-6">
           <div class="flex space-x-4">
             <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-            <a href="{{route("dashboard")}}" class="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium" aria-current="page">Dashboard</a>
+            <a href="{{route("dashboard")}}" class="{{$route == 'dashboard' ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700'}} px-3 py-2 rounded-md text-sm font-medium" aria-current="page">Dashboard</a>
 
             @if ($userType == 1)
 
-                <a href="{{route("register")}}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Cadastrar usuário</a>
+                <a href="{{route("operation.archived")}}" class="{{$route == 'operation.archived' ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700'}} hover:text-white px-3 py-2 rounded-md text-sm font-medium">Arquivados</a>
 
-                <a href="{{route("operation.register")}}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Cadastrar procedimento</a>
+                <a href="{{route("register")}}" class="{{$route == 'register' ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700'}} hover:text-white px-3 py-2 rounded-md text-sm font-medium">Cadastrar usuário</a>
+
+                <a href="{{route("operation.register")}}" class="{{$route == 'operation.register' ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700'}} hover:text-white px-3 py-2 rounded-md text-sm font-medium">Cadastrar procedimento</a>
 
             @endif
           </div>
@@ -57,14 +59,16 @@
   <!-- Mobile menu, show/hide based on menu state. -->
   <div class="hidden" id="mobile-menu">
     <div class="px-2 pt-2 pb-3 space-y-1">
-      <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
+      <!-- Current: "bg-gray-900 text-white", Default: " hover:text-white" -->
       <a href="#" class="bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium" aria-current="page">Dashboard</a>
 
       @if ($userType == 1)
 
-      <a href="{{route("register")}}" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Cadastrar usuário</a>
+      <a href="{{route("operation.archived")}}" class="{{$route == 'operation.archived' ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700'}} hover:text-white px-3 py-2 rounded-md text-sm font-medium">Arquivados</a>
 
-      <a href="{{route("operation.register")}}" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Cadastrar procedimento</a>
+      <a href="{{route("register")}}" class="{{$route == 'register' ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700'}} hover:text-white block px-3 py-2 rounded-md text-base font-medium">Cadastrar usuário</a>
+
+      <a href="{{route("operation.register")}}" class="{{$route == 'operation.register' ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700'}} hover:text-white block px-3 py-2 rounded-md text-base font-medium">Cadastrar procedimento</a>
 
       @endif
     </div>

@@ -21,6 +21,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/operation/finish/{OPN}', [OperationController::class, "finish"])->name("operation.finish");
     Route::post('/operation/finish/{OPN}', [OperationController::class, "finishHandler"]);
     Route::post('/operation/register', [OperationController::class, "create"])->name("operation.create")->middleware('isAdm');
+    Route::get('/operation/archived', [OperationController::class, "archived"])->name("operation.archived")->middleware('isAdm');
+    Route::get('/operation/archive/{OPN}', [OperationController::class, "archive"])->name("operation.archive")->middleware('isAdm');
     Route::post('/operation/register/{OPN}', [OperationController::class, "update"])->name("operation.edit")->middleware('isAdm');
 });
 

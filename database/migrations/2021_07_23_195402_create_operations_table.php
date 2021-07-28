@@ -20,7 +20,8 @@ class CreateOperationsTable extends Migration
             $table->double("long");
             $table->string("address");
             $table->string("subscription");
-            $table->boolean("completed");
+            $table->boolean("completed")->default(0);
+            $table->boolean("archived")->default(0);
             $table->timestamps();
         });
     }
