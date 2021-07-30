@@ -88,7 +88,8 @@
         const markers = JSON.parse(('{!! htmlspecialchars(json_encode($all_operations), ENT_QUOTES, 'UTF-8') !!}'.replace(/&quot;/g,'"')));
         markers.map(marker => {
             const baseUrl = "{!! url('operation/finish/') !!}"
-            const text = `OS ${marker.order} <br> <a href="${baseUrl}/${marker.order}">Clique para finalizar</a>\n`
+            const mapsUrl = `https://www.google.com/maps?q=${marker.lat},${marker.long}`
+            const text = `${marker.order} <br> Maps:<a href="${mapsUrl}">Clique aqui</a> <br> <a href="${baseUrl}/${marker.order}">Clique para finalizar</a>\n`
             const popup = createPopup(text);
             const color = marker.completed ? "green" : "red";
             createMarker(map, marker.lat, marker.long, color, popup)

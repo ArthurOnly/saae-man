@@ -8,6 +8,9 @@ use Illuminate\View\Component;
 
 class nav extends Component
 {
+    public $user;
+    public $userType;
+    public $route;
     /**
      * Create a new component instance.
      *
@@ -15,7 +18,9 @@ class nav extends Component
      */
     public function __construct()
     {
-        //
+        $this->user = Auth::user();
+        $this->userType = Auth::user()->type;
+        $this->route = Route::currentRouteName();
     }
 
     /**
@@ -25,9 +30,6 @@ class nav extends Component
      */
     public function render()
     {
-        $user = Auth::user();
-        $route = Route::currentRouteName();
-        $userType = $user->type;
-        return view('components.site.nav', ["userType" => $userType, "route" => $route]);
+        return view('components.site.nav');
     }
 }

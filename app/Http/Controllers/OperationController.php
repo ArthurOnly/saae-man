@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\operation;
+use App\Models\Operation;
 use App\Models\Service;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -27,7 +27,7 @@ class OperationController extends Controller
         $allOperations = DB::table('operations')
             ->join('services', 'operations.id', '=', 'services.operation_id')
             ->join('users', 'users.id', '=', 'services.user_id')
-            ->select('operations.*', 'users.email')
+            ->select('operations.order', 'operations.address', 'users.email', 'services.created_at')
             ->get()->toArray();
         $userType = Auth::user()->type;
         return view("archivedOpearations", ["all_operations" => $allOperations, "userType" => $userType]);

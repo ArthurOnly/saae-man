@@ -11,6 +11,7 @@
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-100 uppercase tracking-wider">O. de serviço</th>
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-100 uppercase tracking-wider">Responsável</th>
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-100 uppercase tracking-wider">Endereço</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-100 uppercase tracking-wider">Data</th>
                 </tr>
             <thead>
             @if (isset($message))
@@ -27,6 +28,9 @@
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
                             {{$operation->address}}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            {{$operation->created_at}}
                         </td>
                     </tr>
                 @endforeach
