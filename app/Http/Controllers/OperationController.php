@@ -28,6 +28,7 @@ class OperationController extends Controller
             ->join('services', 'operations.id', '=', 'services.operation_id')
             ->join('users', 'users.id', '=', 'services.user_id')
             ->select('operations.order', 'operations.address', 'users.email', 'services.created_at', 'operations.id')
+            ->where('operations.archived','=','1')
             ->get()->toArray();
         $userType = Auth::user()->type;
         return view("archivedOpearations", ["all_operations" => $allOperations, "userType" => $userType]);
@@ -93,14 +94,21 @@ class OperationController extends Controller
         return view("finishOperation", ["order" => $order]);
     }
 
-    public function archive($order){
-        $operation = Operation::firstWhere('order', $order);
+    public function archive($id){
+        $operation = Operation::find($id);
         if ($operation->completed == 1){
             $operation->archived = 1;
             $operation->save();
         }
 
         return redirect('/')->with('message', ["type" => "success", "text" => "Arquivado com sucesso"]);
+    }
+
+    public function unarchive($id){
+        $operation = Operation::find($id);
+        $operation->archived = 0;
+        $operation->save();
+        return redirect('/operation/archived')->with('message', ["type" => "success", "text" => "Desarquivado com sucesso"]);
     }
 
     public function finishHandler($order){

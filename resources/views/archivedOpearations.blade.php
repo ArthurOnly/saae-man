@@ -34,6 +34,7 @@
                             {{$operation->created_at}}
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
+                            <a href={{route("operation.unarchive", $operation->id)}}>Desarquivar</a>
                             <a href={{route("operation.delete", $operation->id)}}>Deletar</a>
                         </td>                        
                     </tr>

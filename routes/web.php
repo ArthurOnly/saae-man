@@ -23,6 +23,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/operation/register', [OperationController::class, "create"])->name("operation.create")->middleware('isAdm');
     Route::get('/operation/archived', [OperationController::class, "archived"])->name("operation.archived")->middleware('isAdm');
     Route::get('/operation/archive/{ID}', [OperationController::class, "archive"])->name("operation.archive")->middleware('isAdm');
+    Route::get('/operation/unarchive/{ID}', [OperationController::class, "unarchive"])->name("operation.unarchive")->middleware('isAdm');
     Route::post('/operation/register/{ID}', [OperationController::class, "update"])->name("operation.edit")->middleware('isAdm');
     Route::get('/operation/delete/{ID}', [OperationController::class, "delete"])->name("operation.delete")->middleware('isAdm');
 });
