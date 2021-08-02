@@ -12,6 +12,7 @@
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-100 uppercase tracking-wider">Responsável</th>
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-100 uppercase tracking-wider">Endereço</th>
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-100 uppercase tracking-wider">Data</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-100 uppercase tracking-wider">Ações</th>
                 </tr>
             <thead>
             @if (isset($message))
@@ -32,6 +33,9 @@
                         <td class="px-6 py-4 whitespace-nowrap">
                             {{$operation->created_at}}
                         </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <a href={{route("operation.delete", $operation->id)}}>Deletar</a>
+                        </td>                        
                     </tr>
                 @endforeach
             <tbody>

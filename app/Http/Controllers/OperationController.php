@@ -11,11 +11,11 @@ use Illuminate\Support\Facades\Http;
 
 class OperationController extends Controller
 {
-    public function index($operationNumber = null){
+    public function index($id = null){
         $operation = [];
         $address = null;
-        if ($operationNumber){
-            $operation = Operation::firstWhere('order', $operationNumber);
+        if ($id){
+            $operation = Operation::find($id);
             $inputAddress = explode("-", $operation->address)[0];
             $address = explode(",", $inputAddress);
         }
@@ -27,7 +27,7 @@ class OperationController extends Controller
         $allOperations = DB::table('operations')
             ->join('services', 'operations.id', '=', 'services.operation_id')
             ->join('users', 'users.id', '=', 'services.user_id')
-            ->select('operations.order', 'operations.address', 'users.email', 'services.created_at')
+            ->select('operations.order', 'operations.address', 'users.email', 'services.created_at', 'operations.id')
             ->get()->toArray();
         $userType = Auth::user()->type;
         return view("archivedOpearations", ["all_operations" => $allOperations, "userType" => $userType]);
@@ -66,6 +66,11 @@ class OperationController extends Controller
         return redirect('/')->with('message', ["type" => "success", "text" => "Criado com sucesso"]);;
     }
 
+    public function delete($id = null){
+        Operation::destroy($id);
+        return redirect('/operation/archived');
+    }
+
     public function update(Request $request){
         $operation = Operation::firstWhere('order', $request->order);
 
@@ -83,7 +88,8 @@ class OperationController extends Controller
         return redirect('/')->with('message', ["type" => "success", "text" => "Alterado com sucesso"]);;
     }
 
-    public function finish($order){
+    public function finish($id){
+        $order = Operation::find($id)->order;
         return view("finishOperation", ["order" => $order]);
     }
 

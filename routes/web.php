@@ -17,13 +17,14 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth')->group(function () {
     Route::get('/', DashboardController::class)->name("dashboard");
-    Route::get('/operation/register/{OPN?}', [OperationController::class, "index"])->name("operation.register")->middleware('isAdm');
-    Route::get('/operation/finish/{OPN}', [OperationController::class, "finish"])->name("operation.finish");
-    Route::post('/operation/finish/{OPN}', [OperationController::class, "finishHandler"]);
+    Route::get('/operation/register/{ID?}', [OperationController::class, "index"])->name("operation.register")->middleware('isAdm');
+    Route::get('/operation/finish/{ID}', [OperationController::class, "finish"])->name("operation.finish");
+    Route::post('/operation/finish/{ID}', [OperationController::class, "finishHandler"]);
     Route::post('/operation/register', [OperationController::class, "create"])->name("operation.create")->middleware('isAdm');
     Route::get('/operation/archived', [OperationController::class, "archived"])->name("operation.archived")->middleware('isAdm');
-    Route::get('/operation/archive/{OPN}', [OperationController::class, "archive"])->name("operation.archive")->middleware('isAdm');
-    Route::post('/operation/register/{OPN}', [OperationController::class, "update"])->name("operation.edit")->middleware('isAdm');
+    Route::get('/operation/archive/{ID}', [OperationController::class, "archive"])->name("operation.archive")->middleware('isAdm');
+    Route::post('/operation/register/{ID}', [OperationController::class, "update"])->name("operation.edit")->middleware('isAdm');
+    Route::get('/operation/delete/{ID}', [OperationController::class, "delete"])->name("operation.delete")->middleware('isAdm');
 });
 
 

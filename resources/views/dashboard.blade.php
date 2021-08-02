@@ -41,10 +41,10 @@
                         </span>
                         </td>
                         <td class="px-6 py-4">
-                            <a href={{route("operation.finish", $operation['order'])}}>Finalizar</a>
+                            <a href={{route("operation.finish", $operation['id'])}}>Finalizar</a>
                             @if ($userType == 1)
-                                <a class="ml-4" href={{route("operation.register", $operation['order'])}}>Editar</a>
-                                <a class="ml-4" href={{route("operation.archive", $operation['order'])}}>Arquivar</a>
+                                <a class="ml-4" href={{route("operation.register", $operation['id'])}}>Editar</a>
+                                <a class="ml-4" href={{route("operation.archive", $operation['id'])}}>Arquivar</a>
                             @endif
                         </td>
                     </tr>
