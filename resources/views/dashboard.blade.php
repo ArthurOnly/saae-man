@@ -16,6 +16,7 @@
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-100 uppercase tracking-wider hidden md:flex">Código</th>
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-100 uppercase tracking-wider">O. de serviço</th>
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-100 uppercase tracking-wider">Endereço</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-100 uppercase tracking-wider">Tipo</th>
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-100 uppercase tracking-wider">Status</th>
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-100 uppercase tracking-wider">Ações</th>
                 </tr>
@@ -34,6 +35,9 @@
                         </td>
                         <td class="px-6 py-4">
                             {{$operation['address']}}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{$operation['operation_type']["name"]}}
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
                             <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{$operation['completed'] ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}}">
@@ -89,7 +93,7 @@
         markers.map(marker => {
             const baseUrl = "{!! url('operation/finish/') !!}"
             const mapsUrl = `https://www.google.com/maps?q=${marker.lat},${marker.long}`
-            const text = `${marker.order} <br> Maps:<a href="${mapsUrl}">Clique aqui</a> <br> <a href="${baseUrl}/${marker.order}">Clique para finalizar</a>\n`
+            const text = `${marker.order} <br> Maps:<a href="${mapsUrl}">Clique aqui</a> <br> <a href="${baseUrl}/${marker.id}">Clique para finalizar</a>\n`
             const popup = createPopup(text);
             const color = marker.completed ? "green" : "red";
             createMarker(map, marker.lat, marker.long, color, popup)

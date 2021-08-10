@@ -16,6 +16,12 @@ class Operation extends Model
         "long",
         "address",
         "subscription",
-        "completed"
+        "completed",
+        "operation_type"
     ];
+
+    public function operationType(){
+        return $this->hasOne(OperationType::class, "id", "operation_type");
+    }
+
 }

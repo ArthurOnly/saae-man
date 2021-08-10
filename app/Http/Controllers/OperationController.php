@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Operation;
+use App\Models\OperationType;
 use App\Models\Service;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -14,20 +15,21 @@ class OperationController extends Controller
     public function index($id = null){
         $operation = [];
         $address = null;
+        $operation_types = OperationType::all()->toArray();
         if ($id){
             $operation = Operation::find($id);
             $inputAddress = explode("-", $operation->address)[0];
             $address = explode(",", $inputAddress);
         }
-
-        return view("registerOperation", ["operation" => $operation, 'address' => $address]);
+        return view("registerOperation", ["operation" => $operation, 'address' => $address, "operation_types" => $operation_types]);
     }
 
     public function archived(){
         $allOperations = DB::table('operations')
             ->join('services', 'operations.id', '=', 'services.operation_id')
             ->join('users', 'users.id', '=', 'services.user_id')
-            ->select('operations.order', 'operations.address', 'users.email', 'services.created_at', 'operations.id')
+            ->join("operation_types", "operation_types.id", "=", "operations.operation_type")
+            ->select('operations.order', 'operations.address', 'users.email', 'services.created_at', 'operations.id', "operation_types.name")
             ->where('operations.archived','=','1')
             ->get()->toArray();
         $userType = Auth::user()->type;
@@ -59,7 +61,8 @@ class OperationController extends Controller
             "long" => $long,
             "order" => $request->order,
             "address" => $request->street.",".$request->number." - CEARA MIRIM/RN",
-            "completed" => false
+            "completed" => false,
+            "operation_type" => $request->operation_type
         ];
         
         Operation::create($data);
@@ -82,6 +85,7 @@ class OperationController extends Controller
             "long" => $request->long,
             "order" => $request->order,
             "address" => $request->street.",".$request->number." - CEARA MIRIM/RN",
+            "operation_type" => $request->operation_type
         ];
 
         $operation->fill($data);
@@ -111,8 +115,13 @@ class OperationController extends Controller
         return redirect('/operation/archived')->with('message', ["type" => "success", "text" => "Desarquivado com sucesso"]);
     }
 
-    public function finishHandler($order){
-        $operation = Operation::firstWhere('order', $order);
+    public function finishHandler($id){
+        $operation = Operation::find($id);
+
+        if ($operation->completed == 1){
+            return redirect('/')->with('message', ["type" => "success", "text" => "Já finalizada"]);;
+        }
+
         $operation->completed = 1;
         $operation->save();
 

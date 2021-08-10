@@ -18,7 +18,7 @@ class DashboardController extends Controller
     public function __invoke()
     {
         $mapsKey = config('app.maps_api_key');
-        $allOperations = Operation::where('archived', 0)->get()->toArray();
+        $allOperations = Operation::with("operationType")->where('archived', 0)->get()->toArray();
         $userType = Auth::user()->type;
         return view("dashboard", ["maps_key" => $mapsKey, "all_operations" => $allOperations, "userType" => $userType]);
     }

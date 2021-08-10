@@ -13,6 +13,14 @@
                 <label>Inscrição:</label>
                 <input value="{{ old('subscription', $operation ? $operation->subscription : null) }}" required class="text-black" type="text" name="subscription">
             </div>
+            <div class="flex flex-col gap-4">
+                <label>Tipo:</label>
+                <select required class="text-black" type="text" name="operation_type">
+                    @foreach ($operation_types as $type)
+                        <option selected="{{ old('operation_type', $operation ? $operation->operation_type : null) == $type["id"] }}" value={{$type["id"]}}>{{$type["name"]}}</option>
+                    @endforeach
+                </select>
+            </div>
             <div class="flex flex-col gap-8 lg:flex-row">
                 <div class="flex flex-col gap-4 flex-grow-3 w-full">
                     <label>Rua:</label>
