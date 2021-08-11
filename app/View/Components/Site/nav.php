@@ -19,7 +19,7 @@ class nav extends Component
     public function __construct()
     {
         $this->user = Auth::user();
-        $this->userType = Auth::user()->type;
+        isset($this->user) && $this->userType = Auth::user()->type;
         $this->route = Route::currentRouteName();
     }
 

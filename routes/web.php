@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\OperationController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ClientController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,8 +17,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/', HomeController::class)->name("home");
+
+Route::get('/cliente/cadastrar', [ClientController::class, "create"])->name("cliente.cadastrar");
+
 Route::middleware('auth')->group(function () {
-    Route::get('/', DashboardController::class)->name("dashboard");
+    Route::get('/dashboard', DashboardController::class)->name("dashboard");
     Route::get('/operation/register/{ID?}', [OperationController::class, "index"])->name("operation.register")->middleware('isAdm');
     Route::get('/operation/finish/{ID}', [OperationController::class, "finish"])->name("operation.finish");
     Route::post('/operation/finish/{ID}', [OperationController::class, "finishHandler"]);
