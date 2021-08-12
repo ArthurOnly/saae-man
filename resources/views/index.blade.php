@@ -1,15 +1,6 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+@extends('template')
 
-<head>
-   <meta charset="UTF-8" />
-   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-   <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-
-    <title>SAAE</title>
-</head>
-
-<body class="bg-gray-800 text-white">
+@section('body')
     <main class="h-screen w-screen flex flex-col">
         <section class="h-1/2 w-full p-12 lg:h-full lg:w-1/2">
             <h1 class="text-5xl font-bold">Sistema de controle SAAE</h1>
@@ -21,6 +12,6 @@
             </div>
         </section>
     </main>
-</body>
-</html>
+@endsection
+
 
