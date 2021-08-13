@@ -19,7 +19,7 @@
                 <input value="{{ old('name') }}" required class="text-black" type="text" name="name">
             </div>
             <div class="flex flex-col gap-4">
-                <label>Telefone:</label>
+                <label>Telefone (sem pontos e traços DDXXXXXYYYY):</label>
                 <input value="{{ old('phone') }}" required class="text-black" type="text" name="phone">
             </div>
             <div class="flex flex-col gap-4">

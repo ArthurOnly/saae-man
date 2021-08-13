@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\SMS;
+use App\Models\Client;
 use App\Models\Operation;
 use App\Models\OperationType;
 use App\Models\Service;
+use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -21,7 +24,7 @@ class OperationController extends Controller
             $inputAddress = explode("-", $operation->address)[0];
             $address = explode(",", $inputAddress);
         }
-        return view("registerOperation", ["operation" => $operation, 'address' => $address, "operation_types" => $operation_types]);
+        return view("admin.registerOperation", ["operation" => $operation, 'address' => $address, "operation_types" => $operation_types]);
     }
 
     public function archived(){
@@ -33,7 +36,7 @@ class OperationController extends Controller
             ->where('operations.archived','=','1')
             ->get()->toArray();
         $userType = Auth::user()->type;
-        return view("archivedOpearations", ["all_operations" => $allOperations, "userType" => $userType]);
+        return view("admin.archivedOpearations", ["all_operations" => $allOperations, "userType" => $userType]);
     }
 
     public function create(Request $request){
@@ -53,6 +56,19 @@ class OperationController extends Controller
             $long = $request->long;
         } 
         
+        $person = Client::where('subscription', $request->subscription)->first();
+        if ($person){
+            $msg = "";
+            if($request->operation_type == 1){
+                $msg = "FOI EMITIDA UMA ORDEM DE CORTE PARA SEU IMÓVEL ($request->subscription). Por favor, procurar o SAAE - Ceará-Mirim/RN para regularizar sua situação.";
+            } else{
+                $msg = "FOI EMITIDA UMA ORDEM DE RELIGACÃO PARA SEU IMÓVEL ($request->subscription). O prazo é de 24h. (SAAE - Ceará-mirim/RN)";
+            }
+            $sms = SMS::sendSMS($person->phone, $msg);
+            if ($sms["status"] == "success"){
+                Toastr::success("SMS enviado com sucesso", "Sucesso");
+            }
+        }
 
         $data = [
             "order" => $request->order,
@@ -66,12 +82,14 @@ class OperationController extends Controller
         ];
         
         Operation::create($data);
-        
-        return redirect('/')->with('message', ["type" => "success", "text" => "Criado com sucesso"]);;
+
+        Toastr::success("Ordem de serviço cadastrada com sucesso", "Sucesso");
+        return redirect('/dashboard')->with('message', ["type" => "success", "text" => "Criado com sucesso"]);;
     }
 
     public function delete($id = null){
         Operation::destroy($id);
+        Toastr::success("Ordem de serviço deletada com sucesso", "Sucesso");
         return redirect('/operation/archived');
     }
 
@@ -90,12 +108,13 @@ class OperationController extends Controller
 
         $operation->fill($data);
         $operation->save();
-        return redirect('/')->with('message', ["type" => "success", "text" => "Alterado com sucesso"]);;
+        Toastr::success("Ordem de serviço editada com sucesso", "Sucesso");
+        return redirect('/dashboard')->with('message', ["type" => "success", "text" => "Alterado com sucesso"]);;
     }
 
     public function finish($id){
         $order = Operation::find($id)->order;
-        return view("finishOperation", ["order" => $order]);
+        return view("admin.finishOperation", ["order" => $order]);
     }
 
     public function archive($id){
@@ -105,13 +124,16 @@ class OperationController extends Controller
             $operation->save();
         }
 
-        return redirect('/')->with('message', ["type" => "success", "text" => "Arquivado com sucesso"]);
+        Toastr::success("Ordem de serviço arquivada com sucesso", "Sucesso");
+        return redirect('/dashboard')->with('message', ["type" => "success", "text" => "Arquivado com sucesso"]);
     }
 
     public function unarchive($id){
         $operation = Operation::find($id);
         $operation->archived = 0;
         $operation->save();
+
+        Toastr::success("Ordem de serviço desarquivada com sucesso", "Sucesso");
         return redirect('/operation/archived')->with('message', ["type" => "success", "text" => "Desarquivado com sucesso"]);
     }
 
@@ -119,7 +141,7 @@ class OperationController extends Controller
         $operation = Operation::find($id);
 
         if ($operation->completed == 1){
-            return redirect('/')->with('message', ["type" => "success", "text" => "Já finalizada"]);;
+            return redirect('/dashboard')->with('message', ["type" => "success", "text" => "Já finalizada"]);;
         }
 
         $operation->completed = 1;
@@ -132,6 +154,7 @@ class OperationController extends Controller
 
         Service::create($data);
 
-        return redirect('/')->with('message', ["type" => "success", "text" => "Finalizado com sucesso"]);;
+        Toastr::success("Ordem de serviço finalizada com sucesso", "Sucesso");
+        return redirect('/dashboard')->with('message', ["type" => "success", "text" => "Finalizado com sucesso"]);;
     }
 }
