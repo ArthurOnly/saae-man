@@ -45,12 +45,12 @@ class OperationController extends Controller
         $long = 0;
         if (empty($request->lat) or empty($request->long)){
             $addressFull = "$request->street $request->number, Ceará-Mirim - Rio Grande do Norte,, Brazil";
-            $apiKey = config("app.position_api_key");
-            $url = "http://api.positionstack.com/v1/forward?access_key=$apiKey&query=$addressFull";
+            $apiKey = config("app.google_geocoding_api_key");
+            $url = "https://maps.googleapis.com/maps/api/geocode/json?address=$addressFull&key=$apiKey";
             
             $responseLocation = Http::get($url)->json();
-            $lat = $responseLocation['data'][0]['latitude'];
-            $long = $responseLocation['data'][0]['longitude'];
+            $lat = $responseLocation['results'][0]['geometry']['location']['lat'];
+            $long = $responseLocation['results'][0]['geometry']['location']['lng'];
         } else{
             $lat = $request->lat;
             $long = $request->long;
