@@ -54,6 +54,8 @@
 
                   <a href="{{route("register")}}" class="{{$route == 'register' ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700'}} hover:text-white px-3 py-2 rounded-md text-sm font-medium">Cadastrar usuário</a>
 
+                  <a href="{{route("client.index")}}" class="{{$route == 'client.index' ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700'}} hover:text-white px-3 py-2 rounded-md text-sm font-medium">Gerenciar clientes</a>
+
                   <a href="{{route("operation.register")}}" class="{{$route == 'operation.register' ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700'}} hover:text-white px-3 py-2 rounded-md text-sm font-medium">Cadastrar procedimento</a>
 
               @endif

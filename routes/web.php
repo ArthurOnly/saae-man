@@ -33,6 +33,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/operation/unarchive/{ID}', [OperationController::class, "unarchive"])->name("operation.unarchive")->middleware('isAdm');
     Route::post('/operation/register/{ID}', [OperationController::class, "update"])->name("operation.edit")->middleware('isAdm');
     Route::get('/operation/delete/{ID}', [OperationController::class, "delete"])->name("operation.delete")->middleware('isAdm');
+
+    Route::prefix('cliente')->group(function(){
+        Route::get('/', [ClientController::class, 'index'])->name('client.index');
+        Route::get('/{id}', [ClientController::class, 'edit'])->name('client.edit');
+        Route::delete('/{id}', [ClientController::class, 'destroy'])->name('client.destroy');
+        Route::put('/{id}', [ClientController::class, 'update'])->name('client.update');
+    });
 });
 
 

@@ -15,9 +15,19 @@ class ClientController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        //
+    public function index(Request $request)
+    {   
+        $filter = $request->query('filter');
+
+        if (!empty($filter)) {
+            $clients = Client::sortable()
+                ->where('name', 'like', '%'.$filter.'%')
+                ->paginate(5);
+        } else {
+            $clients = Client::sortable()->paginate(20);
+        }
+
+        return view("clients.index", ["clients" => $clients, "filter" => $filter]);
     }
 
     /**
@@ -27,7 +37,7 @@ class ClientController extends Controller
      */
     public function create()
     {
-        return view("clients.cadastro-cliente-fatura");
+        return view("clients.create");
     }
 
     /**
@@ -50,8 +60,8 @@ class ClientController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {
-        //
+    {   
+        //return view('clients.show');
     }
 
     /**
@@ -62,7 +72,11 @@ class ClientController extends Controller
      */
     public function edit($id)
     {
-        //
+        $client = Client::find($id);
+
+        if (!$client) return redirect('/cliente/cadastrar');
+
+        return view('clients.edit', ['client' => $client]);
     }
 
     /**
@@ -74,7 +88,11 @@ class ClientController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $client = Client::find($id);
+        $client->fill($request->all());
+        $client->save();
+        FacadesToastr::success("Cliente editado com sucesso", "Sucesso");
+        return view('clients.edit', ['client' => $client]);
     }
 
     /**
@@ -85,6 +103,8 @@ class ClientController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Client::destroy($id);
+        FacadesToastr::success("Cliente deletado com sucesso", "Sucesso");
+        return redirect('/cliente');
     }
 }
