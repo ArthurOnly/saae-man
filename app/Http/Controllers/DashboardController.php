@@ -20,6 +20,6 @@ class DashboardController extends Controller
         $mapsKey = config('app.maps_api_key');
         $allOperations = Operation::with("operationType")->where('archived', 0)->get()->toArray();
         $userType = Auth::user()->type;
-        return view("admin.dashboard", ["maps_key" => $mapsKey, "all_operations" => $allOperations, "userType" => $userType]);
+        return view("operations.index", ["maps_key" => $mapsKey, "all_operations" => $allOperations, "userType" => $userType]);
     }
 }

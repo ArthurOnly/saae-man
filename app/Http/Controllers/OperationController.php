@@ -24,7 +24,7 @@ class OperationController extends Controller
             $inputAddress = explode("-", $operation->address)[0];
             $address = explode(",", $inputAddress);
         }
-        return view("admin.registerOperation", ["operation" => $operation, 'address' => $address, "operation_types" => $operation_types]);
+        return view("operations.registerOperation", ["operation" => $operation, 'address' => $address, "operation_types" => $operation_types]);
     }
 
     public function archived(){
@@ -36,7 +36,7 @@ class OperationController extends Controller
             ->where('operations.archived','=','1')
             ->get()->toArray();
         $userType = Auth::user()->type;
-        return view("admin.archivedOpearations", ["all_operations" => $allOperations, "userType" => $userType]);
+        return view("operations.archivedOpearations", ["all_operations" => $allOperations, "userType" => $userType]);
     }
 
     public function create(Request $request){
@@ -114,7 +114,7 @@ class OperationController extends Controller
 
     public function finish($id){
         $order = Operation::find($id)->order;
-        return view("admin.finishOperation", ["order" => $order]);
+        return view("operations.finishOperation", ["order" => $order]);
     }
 
     public function archive($id){

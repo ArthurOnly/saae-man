@@ -23,16 +23,19 @@ Route::get('/cliente/cadastrar', [ClientController::class, "create"])->name("cli
 Route::post('/cliente/cadastrar', [ClientController::class, "store"])->name("client.create");
 
 Route::middleware('auth')->group(function () {
-    Route::get('/dashboard', DashboardController::class)->name("dashboard");
-    Route::get('/operation/register/{ID?}', [OperationController::class, "index"])->name("operation.register")->middleware('isAdm');
-    Route::get('/operation/finish/{ID}', [OperationController::class, "finish"])->name("operation.finish");
-    Route::post('/operation/finish/{ID}', [OperationController::class, "finishHandler"]);
-    Route::post('/operation/register', [OperationController::class, "create"])->name("operation.create")->middleware('isAdm');
-    Route::get('/operation/archived', [OperationController::class, "archived"])->name("operation.archived")->middleware('isAdm');
-    Route::get('/operation/archive/{ID}', [OperationController::class, "archive"])->name("operation.archive")->middleware('isAdm');
-    Route::get('/operation/unarchive/{ID}', [OperationController::class, "unarchive"])->name("operation.unarchive")->middleware('isAdm');
-    Route::post('/operation/register/{ID}', [OperationController::class, "update"])->name("operation.edit")->middleware('isAdm');
-    Route::get('/operation/delete/{ID}', [OperationController::class, "delete"])->name("operation.delete")->middleware('isAdm');
+
+    Route::prefix('operation')->group(function() {
+        Route::get('/', DashboardController::class)->name("operation.index");
+        Route::get('/{ID?}', [OperationController::class, "index"])->name("operation.register")->middleware('isAdm');
+        Route::get('/finish/{ID}', [OperationController::class, "finish"])->name("operation.finish");
+        Route::post('/finish/{ID}', [OperationController::class, "finishHandler"]);
+        Route::post('/', [OperationController::class, "create"])->name("operation.create")->middleware('isAdm');
+        Route::get('/archived', [OperationController::class, "archived"])->name("operation.archived")->middleware('isAdm');
+        Route::get('/archive/{ID}', [OperationController::class, "archive"])->name("operation.archive")->middleware('isAdm');
+        Route::get('/unarchive/{ID}', [OperationController::class, "unarchive"])->name("operation.unarchive")->middleware('isAdm');
+        Route::post('/{ID}', [OperationController::class, "update"])->name("operation.edit")->middleware('isAdm');
+        Route::delete('/{ID}', [OperationController::class, "delete"])->name("operation.delete")->middleware('isAdm');
+    });
 
     Route::prefix('cliente')->group(function(){
         Route::get('/', [ClientController::class, 'index'])->name('client.index');
