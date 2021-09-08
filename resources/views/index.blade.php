@@ -8,7 +8,7 @@
         <section class="h-1/2 w-full lg:h-full lg:w-1/2">
             <div class="d-flex flex-col p-12 w-full max-w-4xl">
                 <a class="bg-blue-800 p-4 w-full block" href={{route("login")}}>Entrar como funcionário</a>
-                <a class="bg-blue-800 p-4 w-full mt-8 block" href={{route("cliente.cadastrar")}}>Cadastrar cliente</a>
+                <a class="bg-blue-800 p-4 w-full mt-8 block" href={{route("client.create")}}>Cadastrar cliente</a>
             </div>
         </section>
     </main>

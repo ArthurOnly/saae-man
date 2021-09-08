@@ -19,8 +19,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', HomeController::class)->name("home");
 
-Route::get('/cliente/cadastrar', [ClientController::class, "create"])->name("cliente.cadastrar");
-Route::post('/cliente/cadastrar', [ClientController::class, "store"])->name("cliente.cadastrar");
+Route::get('/cliente/cadastrar', [ClientController::class, "create"])->name("client.create");
+Route::post('/cliente/cadastrar', [ClientController::class, "store"])->name("client.create");
 
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', DashboardController::class)->name("dashboard");

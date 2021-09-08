@@ -3,11 +3,16 @@
 
 @section('body')
     <div id='map' style='width: 100%; height: 500px;'></div>
+    <p>
+    <span class="text-yellow-500">Religamento: Amarelo</span>, 
+    <span class="text-blue-500">Religamento concluido: Azul</span>, 
+    <span class="text-red-500">Desligamento: Vermelho</span>,
+    <span class="text-green-500">Desligamento concluido: Verde</span></p>
     <div class="container mx-auto py-24">
         <div class="flex w-full">
             <h1 class="text-4xl font-bold">Procedimentos</h1>
             @if ($userType == 1)
-                <a href="{{route('operation.register')}}" class="ml-auto px-6 py-3 font-semibold rounded-full bg-green-100 text-green-800">+ Inserir novo</a>
+                <a href="{{route('client.create')}}" class="ml-auto px-6 py-3 font-semibold rounded-full bg-green-100 text-green-800">+ Inserir novo</a>
             @endif
         </div>
         <table class="mt-8 min-w-full divide-y divide-gray-200">
@@ -75,7 +80,7 @@
         function createMarker(map, lat, long, color, popup){
             var marker = new mapboxgl.Marker({
                 color: color,
-                draggable: true
+                draggable: false
             }).setLngLat([long, lat]).setPopup(popup)
             .addTo(map);
         }
@@ -95,7 +100,10 @@
             const mapsUrl = `https://www.google.com/maps?q=${marker.lat},${marker.long}`
             const text = `${marker.order} <br> Maps:<a href="${mapsUrl}">Clique aqui</a> <br> <a href="${baseUrl}/${marker.id}">Clique para finalizar</a>\n`
             const popup = createPopup(text);
-            const color = marker.completed ? "green" : "red";
+            let color = marker.operation_type == 1 ? "yellow" : "red";
+            if (marker.completed)
+                color = color == "red" ? "green" : "blue"
+
             createMarker(map, marker.lat, marker.long, color, popup)
         })
     </script>

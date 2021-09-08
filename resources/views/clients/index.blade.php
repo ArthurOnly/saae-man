@@ -6,12 +6,15 @@
         <div class="flex w-full">
             <h1 class="text-4xl font-bold">Clientes</h1>
         </div>
-        <form class="form-inline" method="GET">
-        <div class="form-group mb-2 mt-2">
-            <input type="text" class="form-control text-black" id="filter" name="filter" placeholder="Buscar por nome..." value="{{$filter}}">
-            <button type="submit" class="btn btn-default mb-2 bg-blue-800 p-2 ml-0">Buscar</button>
+        <div class="flex justify-between items-center">
+            <form class="form-inline" method="GET">
+                <div class="form-group mb-2 mt-2">
+                    <input type="text" class="form-control text-black" id="filter" name="filter" placeholder="Buscar por nome..." value="{{$filter}}">
+                    <button type="submit" class="btn btn-default mb-2 bg-blue-800 p-2 ml-0">Buscar</button>
+                </div>
+            </form>
+            <a href="{{route('client.create')}}" class="ml-auto px-6 py-3 font-semibold rounded-full bg-green-100 text-green-800">+ Inserir novo</a>
         </div>
-        </form>
         <table class="mt-8 min-w-full divide-y divide-gray-200">
             <thead class="bg-gray-700">
                 <tr>
