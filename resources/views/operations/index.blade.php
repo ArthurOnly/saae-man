@@ -12,7 +12,7 @@
         <div class="flex w-full">
             <h1 class="text-4xl font-bold">Procedimentos</h1>
             @if ($userType == 1)
-                <a href="{{route('client.create')}}" class="ml-auto px-6 py-3 font-semibold rounded-full bg-green-100 text-green-800">+ Inserir novo</a>
+                <a href="{{route('operation.create')}}" class="ml-auto px-6 py-3 font-semibold rounded-full bg-green-100 text-green-800">+ Inserir novo</a>
             @endif
         </div>
         <table class="mt-8 min-w-full divide-y divide-gray-200">

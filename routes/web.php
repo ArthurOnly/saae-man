@@ -26,10 +26,11 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('operation')->group(function() {
         Route::get('/', DashboardController::class)->name("operation.index");
+        Route::get('/cadastrar', [OperationController::class, "create"])->name("operation.create")->middleware('isAdm');
         Route::get('/{ID?}', [OperationController::class, "index"])->name("operation.register")->middleware('isAdm');
         Route::get('/finish/{ID}', [OperationController::class, "finish"])->name("operation.finish");
         Route::post('/finish/{ID}', [OperationController::class, "finishHandler"]);
-        Route::post('/', [OperationController::class, "create"])->name("operation.create")->middleware('isAdm');
+        Route::post('/', [OperationController::class, "store"])->name("operation.create")->middleware('isAdm');
         Route::get('/archived', [OperationController::class, "archived"])->name("operation.archived")->middleware('isAdm');
         Route::get('/archive/{ID}', [OperationController::class, "archive"])->name("operation.archive")->middleware('isAdm');
         Route::get('/unarchive/{ID}', [OperationController::class, "unarchive"])->name("operation.unarchive")->middleware('isAdm');
